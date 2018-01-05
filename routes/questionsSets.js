@@ -184,11 +184,6 @@ questionSetRouter.route('/:qsetId/questions/:qId')
     .then((qset) => { 
         
         if (qset != null && qset.questions.id(req.params.qId) != null) {
-            // if (!req.user._id.equals(dish.comments.id(req.params.commentId).author._id)) {
-            //     err = new Error('Only the author is able change this comment!');
-            //     err.status = 404;
-            //     return next(err);
-            // }
             if (req.body.name) {
                 qset.questions.id(req.params.qId).name = req.body.name;
             }
@@ -312,6 +307,99 @@ questionSetRouter.route('/:qsetId/questions/:qId/options')
             return next(err);
         } else {
             err = new Error('Question ' + req.params.qId + ' not found');
+            err.status = 404;
+            return next(err);
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err));
+});
+
+questionSetRouter.route('/:qsetId/questions/:qId/options/:oId')
+.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+.get(cors.cors, (req, res, next) => {
+    QuestionSets.findById(req.params.qsetId)
+    .then((qset) => {
+        if (qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) != null) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(qset.questions.id(req.params.qId).options.id(req.params.oId));
+        } else if ( qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) == null) {
+            err = new Error('Option ' + req.params.oId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else if ( qset != null && qset.questions.id(req.params.qId) == null ) {
+            err = new Error('Question ' + req.params.qId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else {
+            err = new Error('Question set ' + req.params.qsetId + ' not found');
+            err.status = 404;
+            return next(err);
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
+.post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    res.statusCode = 403;
+    res.end('POST operation not supported on /questionsets/'+ req.params.qsetId
+        + '/questions/' + req.params.qId + '/options/' + req.params.oId);
+})
+.put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    QuestionSets.findById(req.params.qsetId)
+    .then((qset) => {
+        if (qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) != null) {
+            if(req.body.name) {
+                qset.questions.id(req.params.qId).options.id(req.params.oId).name = req.body.name;
+            }
+            if(req.body.isAnswer) {
+                qset.questions.id(req.params.qId).options.id(req.params.oId).isAnswer = req.body.isAnswer;
+            }
+            if(req.body.isSelected) {
+                qset.questions.id(req.params.qId).options.id(req.params.oId).isSelected = req.body.isSelected;
+            }
+            qset.save()
+            .then((qset) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(qset);
+            }, (err) => next(err));
+        } else if ( qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) == null) {
+            err = new Error('Option ' + req.params.oId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else if ( qset != null && qset.questions.id(req.params.qId) == null ) {
+            err = new Error('Question ' + req.params.qId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else {
+            err = new Error('Question set ' + req.params.qsetId + ' not found');
+            err.status = 404;
+            return next(err);
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
+.delete(authenticate.verifyUser, (req, res, next) => {
+    QuestionSets.findById(req.params.qsetId)
+    .then((qset) => {
+        if (qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) != null) {
+            qset.questions.id(req.params.qId).options.id(req.params.oId).remove();
+            qset.save()
+            .then((qset) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(qset);
+            }, (err) => next(err));
+        } else if ( qset != null && qset.questions.id(req.params.qId) != null && qset.questions.id(req.params.qId).options.id(req.params.oId) == null) {
+            err = new Error('Option ' + req.params.oId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else if ( qset != null && qset.questions.id(req.params.qId) == null ) {
+            err = new Error('Question ' + req.params.qId + ' not found');
+            err.status = 404;
+            return next(err);
+        } else {
+            err = new Error('Question set ' + req.params.qsetId + ' not found');
             err.status = 404;
             return next(err);
         }

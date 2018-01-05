@@ -60,11 +60,12 @@ router.delete('/:userId', cors.corsWithOptions,/* authenticate.verifyUser, authe
   .catch((err) => next(err));
 });
 
-router.post('/signup', cors.corsWithOptions, authenticate.verifyAdmin, (req, res, next) => {
+router.post('/signup', cors.corsWithOptions, (req, res, next) => {
+  console.log('user', req.body);
   User.register(new User({username: req.body.username}), 
     req.body.password, (err, user) => {
     if(err) {
-      console.log('hello!');
+      console.log('Error!');
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
       res.json({err: err});
@@ -80,8 +81,10 @@ router.post('/signup', cors.corsWithOptions, authenticate.verifyAdmin, (req, res
         user.mobile_no = req.body.mobile_no;
       if(req.body.dob)
         user.dob = req.body.dob;
+      if(req.body.usertype)
+        user.usertype = req.body.usertype;
       if(req.body.location)
-        user.location = req.body.location
+        user.location = req.body.location;
       if(req.body.designation)
         user.designation = req.body.designation;
       if(req.body.department)
@@ -101,6 +104,15 @@ router.post('/signup', cors.corsWithOptions, authenticate.verifyAdmin, (req, res
       });
     }
   });
+
+//   User.create(req.body)
+//   .then((qset) => {
+//       console.log('Question set Created ', qset);
+//       res.statusCode = 200;
+//       res.setHeader('Content-Type', 'application/json');
+//       res.json({qset, success: true, status: 'Registration Successful!'});
+//   }, (err) => next(err))
+//   .catch((err) => next(err));
 });
 
 router.post('/login', cors.corsWithOptions, passport.authenticate('local'), (req, res) => {

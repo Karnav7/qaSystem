@@ -14,7 +14,7 @@ var User = new Schema({
     },
     usertype: {
         type: String,
-        default: 'Employee'
+        default: ''
     },
     email_id: {
         type: String,
