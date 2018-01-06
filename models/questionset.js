@@ -13,16 +13,20 @@ var optionSchema = new Schema({
     isSelected: {
         type: Boolean,
         default: false
-    },
-    qid: {
-        type: Schema.Types.ObjectId,
-        ref: 'Question'
     }
+    // qid: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Question'
+    // }
 });
 
 var questionSchema = new Schema({
     name: {
         type: String,
+        default: ''
+    },
+    marks: {
+        type: Number,
         default: ''
     },
     options: [optionSchema]
