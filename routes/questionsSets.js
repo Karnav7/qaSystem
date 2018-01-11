@@ -14,7 +14,7 @@ questionSetRouter.use(bodyParser.json());
 questionSetRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
 .get(cors.cors, (req, res, next) => {
-    QuestionSets.find({})
+    QuestionSets.find(req.query)
     .then((qsets) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');

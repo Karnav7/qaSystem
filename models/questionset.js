@@ -33,6 +33,10 @@ var questionSchema = new Schema({
 });
 
 var questionSetSchema = new Schema({
+    name: {
+        type: String,
+        default: ''
+    },
     department: {
         type: String,
         default: ''
