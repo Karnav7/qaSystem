@@ -10,14 +10,24 @@ var testSchema = new Schema({
         type: String,
         default: ''
     },
-    date: {
-        type: Date,
-        default: Date.now
+    uId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
-    qset_id: {
+    qsetId: {
         type: Schema.Types.ObjectId,
         ref: 'QuestionSet'
+    },
+    marks_scored: {
+        type: Number,
+        default: ''
+    },
+    total_marks: {
+        type: Number,
+        default: ''
     }
+},{
+    timestamps: true
 });
 
 var Test = mongoose.model('Test', testSchema);

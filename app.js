@@ -17,6 +17,7 @@ var config = require('./config');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var questionSetRouter = require('./routes/questionsSets');
+var testRouter = require('./routes/tests');
 
 var QuestionSets = require('./models/questionset');
 
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 app.use('/questionsets', questionSetRouter);
+app.use('/tests', testRouter);
 
 
 // catch 404 and forward to error handler

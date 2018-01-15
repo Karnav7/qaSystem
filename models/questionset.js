@@ -29,6 +29,10 @@ var questionSchema = new Schema({
         type: Number,
         default: ''
     },
+    answered: {
+        type: Boolean,
+        default: false
+    },
     options: [optionSchema]
 });
 
@@ -46,6 +50,10 @@ var questionSetSchema = new Schema({
         default: ''
     },
     location: {
+        type: String,
+        default: ''
+    },
+    test_duration: {
         type: String,
         default: ''
     },
