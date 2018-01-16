@@ -27,7 +27,7 @@ testRouter.route('/')
     .catch((err) => next(err));
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    Problems.create(req.body)
+    Tests.create(req.body)
     .then((test) => {
         console.log('test submitted ', test);
         res.statusCode = 200;
