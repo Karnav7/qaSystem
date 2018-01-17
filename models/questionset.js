@@ -54,7 +54,7 @@ var questionSetSchema = new Schema({
         default: ''
     },
     test_duration: {
-        type: String,
+        type: Number,
         default: ''
     },
     questions: [questionSchema]
