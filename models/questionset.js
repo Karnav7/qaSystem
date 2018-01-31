@@ -21,6 +21,10 @@ var optionSchema = new Schema({
 });
 
 var questionSchema = new Schema({
+    no: {
+        type: Number,
+        default: ''
+    },
     name: {
         type: String,
         default: ''

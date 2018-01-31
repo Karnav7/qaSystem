@@ -176,9 +176,8 @@ questionSetRouter.route('/:qsetId/questions/:qId')
 })
 .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     res.statusCode = 403;
-    res.end('POST operation not supported on /questionsets/'+ req.params.qsetId
-        + '/questions/' + req.params.qId);
-})
+    res.end('POST operation not supported on /questionsets/'+ req.params.qsetId  + '/questions/' + req.params.qId);
+})     
 .put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     QuestionSets.findById(req.params.qsetId)
     .then((qset) => { 
@@ -189,6 +188,9 @@ questionSetRouter.route('/:qsetId/questions/:qId')
             }
             if (req.body.options) {
                 qset.questions.id(req.params.qId).options = req.body.options;                
+            }
+            if (req.body.no) {
+                qset.questions.id(req.params.qId).no = req.body.no;
             }
             qset.save()
             .then((qset) => {

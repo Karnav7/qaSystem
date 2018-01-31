@@ -34,7 +34,7 @@ var UserSchema = new Schema({
         default: ''
     },
     dob: {
-        type: Date,
+        type: String,
         default: ''
     },
     location: {

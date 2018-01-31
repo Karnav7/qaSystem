@@ -148,7 +148,9 @@ router.post('/signup', cors.corsWithOptions, (req, res, next) => {
     mobile_no: req.body.mobile_no,
     location: req.body.location,
     designation: req.body.designation,
-    department: req.body.department
+    department: req.body.department,
+    usertype: req.body.usertype,
+    dob: req.body.dob
   });
 
   user.addUser(newUser, (err, user) => {
