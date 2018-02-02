@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 
 router.options('*', cors.corsWithOptions, (req, res) => { res.sendStatus(200); } );
 
-router.get('/', cors.corsWithOptions, authenticate.verifyUser, function(req, res, next) {
+router.get('/', cors.corsWithOptions, /*authenticate.verifyUser,*/ function(req, res, next) {
   //res.send('respond with a resource');
   user.find(req.query)
 

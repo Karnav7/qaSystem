@@ -19,7 +19,7 @@ var UserSchema = new Schema({
     },
     password: {
         type: String,
-        default: ''
+        default: '123'
     },
     usertype: {
         type: String,

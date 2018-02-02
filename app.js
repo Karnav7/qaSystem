@@ -18,6 +18,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var questionSetRouter = require('./routes/questionsSets');
 var testRouter = require('./routes/tests');
+var mailRouter = require('./routes/mailRouter');
+var resetcodeRouter = require('./routes/resetcodeRouter');
 
 var QuestionSets = require('./models/questionset');
 
@@ -54,7 +56,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 app.use('/questionsets', questionSetRouter);
+app.use('/mail', mailRouter);
 app.use('/tests', testRouter);
+app.use('/resetpassword', resetcodeRouter);
 
 
 // catch 404 and forward to error handler
